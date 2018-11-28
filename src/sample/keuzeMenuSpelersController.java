@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -68,14 +69,11 @@ public class keuzeMenuSpelersController  implements Initializable {
         stage.setTitle("waitingroom");
         stage.setScene(new Scene(root, 300, 275));
         stage.show();
-
-        controller.setThread(new waitingForPlayer(controller,impl,sessionToken, spelers));
         System.out.println("sessiontoken: "+sessionToken);
-        controller.waitForOtherPlayer(sessionToken, spelers);
-
         Stage oldstage  = (Stage) twee.getScene().getWindow();
         oldstage.close();
         System.out.println("ik ben er nog");
+        controller.waitForOtherPlayer(sessionToken, spelers);
     }
 
 }

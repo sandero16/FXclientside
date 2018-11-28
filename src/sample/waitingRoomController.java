@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -15,8 +16,6 @@ import java.util.ResourceBundle;
 public class waitingRoomController implements Initializable {
     public Label statusLabel;
     public Counter impl;
-    public waitingForPlayer waitingThread;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -24,15 +23,24 @@ public class waitingRoomController implements Initializable {
     public void setInterface(Counter impl){
         this.impl=impl;
     }
-    public void setThread(waitingForPlayer w){
-        waitingThread=w;
-    }
     public void waitForOtherPlayer(String sessionToken, int aantalspelers){
         System.out.println("starting thread sessiontoken" +sessionToken);
         try {
-            impl.addToGame(sessionToken, aantalspelers);
+            Task<Void> task = new Task<Void>() {
+                @Override protected Void call() throws Exception {
+                    System.out.println("hier");
+                    impl.addToGame(sessionToken, aantalspelers);
+                    playerGevonden(sessionToken);
+                    System.out.println("player gevonden");
+                    return null;
+                }
+            };
+            new Thread(task).start();
+
+
+
             System.out.println("zoeken naar ander"+ sessionToken);
-            new Thread(waitingThread).start();
+
         }
         catch (Exception e){
             e.printStackTrace();
