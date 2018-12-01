@@ -82,84 +82,104 @@ public class GameWindowController implements Initializable {
 
     }
     public void button1Clicked(){
-        button1.setText(Integer.toString(zet(1)));
-        gekozen.add(button1);
-        changeState();
+        if(beurt) {
+            gekozen.add(button1);
+            button1.setText(Integer.toString(zet(1)));
+        }
+
     }
     public void button2Clicked(){
-        button2.setText(Integer.toString(zet(2)));
-        gekozen.add(button2);
-        changeState();
+        if(beurt) {
+            gekozen.add(button2);
+            button2.setText(Integer.toString(zet(2)));
+        }
     }
     public void button3Clicked(){
-        button3.setText(Integer.toString(zet(3)));
-        gekozen.add(button3);
-        changeState();
+        System.out.println(beurt);
+            if(beurt) {
+                gekozen.add(button3);
+                button3.setText(Integer.toString(zet(3)));
+            }
+
     }
     public void button4Clicked(){
-        button4.setText(Integer.toString(zet(4)));
-        gekozen.add(button4);
-        changeState();
+        System.out.println(beurt);
+            if(beurt) {
+                gekozen.add(button4);
+                button4.setText(Integer.toString(zet(4)));
+            }
     }
     public void button5Clicked(){
-        button5.setText(Integer.toString(zet(5)));
-        gekozen.add(button5);
-        changeState();
+            if(beurt) {
+                gekozen.add(button5);
+                button5.setText(Integer.toString(zet(5)));
+            }
     }
     public void button6Clicked(){
-        button6.setText(Integer.toString(zet(6)));
-        gekozen.add(button6);
-        changeState();
+            if(beurt) {
+                gekozen.add(button6);
+                button6.setText(Integer.toString(zet(6)));
+            }
     }
     public void button7Clicked(){
-        button7.setText(Integer.toString(zet(7)));
-        gekozen.add(button7);
-        changeState();
+            if(beurt) {
+                gekozen.add(button7);
+                button7.setText(Integer.toString(zet(7)));
+            }
     }
     public void button8Clicked(){
-        button8.setText(Integer.toString(zet(8)));
-        gekozen.add(button8);
-        changeState();
+            if(beurt) {
+                gekozen.add(button8);
+                button8.setText(Integer.toString(zet(8)));
+            }
     }
     public void button9Clicked(){
-        button9.setText(Integer.toString(zet(9)));
-        gekozen.add(button9);
-        changeState();
+            if(beurt) {
+                gekozen.add(button9);
+                button9.setText(Integer.toString(zet(9)));
+            }
     }
     public void button10Clicked(){
-        button10.setText(Integer.toString(zet(10)));
-        gekozen.add(button10);
-        changeState();
+            if(beurt) {
+                gekozen.add(button10);
+                button10.setText(Integer.toString(zet(10)));
+            }
     }
     public void button11Clicked(){
-        button11.setText(Integer.toString(zet(11)));
-        gekozen.add(button11);
-        changeState();
+            if(beurt) {
+                gekozen.add(button11);
+                button11.setText(Integer.toString(zet(11)));
+            }
     }
     public void button12Clicked(){
-        button12.setText(Integer.toString(zet(12)));
-        gekozen.add(button12);
-        changeState();
+            if(beurt) {
+                gekozen.add(button12);
+                button12.setText(Integer.toString(zet(12)));
+            }
     }
     public void button13Clicked(){
-        button13.setText(Integer.toString(zet(13)));
-        gekozen.add(button15);
-        changeState();
+            if(beurt) {
+                gekozen.add(button13);
+                button13.setText(Integer.toString(zet(13)));
+            }
     }
     public void button14Clicked(){
-        button14.setText(Integer.toString(zet(14)));
-        gekozen.add(button14);
-        changeState();
+            if(beurt) {
+                gekozen.add(button14);
+                button14.setText(Integer.toString(zet(14)));
+            }
     }
     public void button15Clicked(){
-        button15.setText(Integer.toString(zet(15)));
-        gekozen.add(button15);
-        changeState();
+            if(beurt) {
+                gekozen.add(button15);
+                button15.setText(Integer.toString(zet(15)));
+            }
     }
     public void button16Clicked(){
-        button16.setText(Integer.toString(zet(16)));
-        gekozen.add(button16);
-        changeState();
+            if(beurt) {
+                gekozen.add(button16);
+                button16.setText(Integer.toString(zet(16)));
+            }
     }
 
     public int zet(int i){
@@ -168,117 +188,148 @@ public class GameWindowController implements Initializable {
                 aantalKeuzes++;
                 int temp=impl.getZet(i, sessionToken);
                 waardes.add(temp);
-                return temp;
+                System.out.println("aantalkeuzes: "+aantalKeuzes);
+                if(!checkBonusZet()){
+                    if(aantalKeuzes==2) {
+                        impl.changeBeurt(sessionToken);
+                    }
+                }
+                impl.geefNotify(sessionToken);
+                changeState();
 
+                return temp;
             }
             else return -1;
         }
         catch (Exception e){
-
+            e.printStackTrace();
+            System.out.println(e);
         }
         return -1;
     }
     public void setHelper(ListenerHelper listenerHelper){
         this.listenerHelper=listenerHelper;
     }
-    public void changeState(){
-        try {
-            if (aantalKeuzes == 2) {
-                beurt = false;
-                /*
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(1000);
-                        }
-                        catch (Exception e){
-
-                        }
-                    }
-                });*/
-
-                Task<Void> sleeper = new Task<Void>() {
-                    @Override
-                    protected Void call() throws Exception {
-                        try {
-                            System.out.println("sleep");
-                            Thread.sleep(2000);
-                        } catch (InterruptedException e) {
-                        }
-                        return null;
-                    }
-                };
-                sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-                    @Override
-                    public void handle(WorkerStateEvent event) {
-                        System.out.println("awake");
-                        resetKeuzes();
-
-
-                    }
-                });
-                new Thread(sleeper).start();
+    public Boolean checkBonusZet(){
+        if(aantalKeuzes==2){
+            if(waardes.get(0)==waardes.get(1)){
+                return true;
             }
-                if(waardes.get(0)==waardes.get(1)){
-                    score++;
-                    gekozen.clear();
-                }
-                //resetKeuzes();
-
-
-                impl.changeBeurt(sessionToken);
-                aantalKeuzes=0;
-                statuslabel.setText("het is aan de andere");
-                if(aantalgeradenParen!=8) {
-                    listen();
-                }
-
-            }
-             catch (Exception e){
 
         }
+        return false;
     }
+    public void changeState(){
+        try {
+            Task<Void> sleeper = new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+                    try {
+                        System.out.println("sleep");
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                    }
+                    return null;
+                }
+            };
+            sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+                @Override
+                public void handle(WorkerStateEvent event) {
+                    System.out.println("awake");
+                    resetKeuzes();
+
+
+                }
+            });
+            if (aantalKeuzes == 2) {
+                //resetten keuzes
+                aantalKeuzes = 0;
+                System.out.println("waarde 1: "+waardes.get(0)+" waarde 2:"+waardes.get(1));
+                if (waardes.get(0) == waardes.get(1)) {
+                    score++;
+                    aantalgeradenParen++;
+                    System.out.println("aantalgeradenparen: "+aantalgeradenParen);
+                    gekozen.clear();
+                    waardes.clear();
+                    if(aantalgeradenParen==8){
+                        System.out.println("open window");
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                openEndWindow();
+                            }
+                        });
+
+                    }
+                } else {
+                    System.out.println("het is aan de andere");
+                    statuslabel.setText("het is aan de andere");
+                    beurt=false;
+                    new Thread(sleeper).start();
+                    if (aantalgeradenParen != 8) {
+                        listen();
+                    }
+
+                }
+            }
+        }
+             catch (Exception e){
+                e.printStackTrace();
+                 System.out.println(e);
+            }
+        }
     public void setBeurt(){
         beurt=true;
     }
-    public void resetKeuzes(){
-        System.out.println("waardes: "+waardes.get(0)+" "+ waardes.get(1));
-            if (waardes.get(0) == waardes.get(1)) {
-                System.out.println("ze zijn gelijk");
-                aantalgeradenParen++;
+    public void resetKeuzes() {
+        System.out.println("waardes: " + waardes.get(0) + " " + waardes.get(1));
+        System.out.println(gekozen.size());
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                for (Button b : gekozen) {
+                    System.out.println("button");
+                    b.setText("*");
+                }
                 gekozen.clear();
-
             }
-            else {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        for (Button b : gekozen) {
-                            b.setText("*");
-                        }
-                    }
-                });
-            }
-            /*
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(4000);
-                        } catch (Exception e) {
-                            System.out.println("thread kan niet slapen");
-                        }
-                        for (Button b : gekozen) {
-                            b.setText("*");
-                        }
-                        gekozen.clear();
-                    }
-                });
-                */
+        });
+
+        waardes.clear();
+        System.out.println("aantalgeraden paren"+aantalgeradenParen);
+        //check if the game is ended
+        if(aantalgeradenParen==8) {
+            System.out.println("open window");
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    openEndWindow();
+                }
+            });
 
 
-            waardes.clear();
+        }
+    }
+    public void resetListenKeuzes() {
+        System.out.println("waardes: " + waardes.get(0) + " " + waardes.get(1));
+        if (waardes.get(0) != waardes.get(1)) {
+            System.out.println(gekozen.size());
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    for (Button b : gekozen) {
+                        System.out.println("button");
+                        b.setText("*");
+                    }
+                    gekozen.clear();
+                }
+            });
+        }
+        else{
+            System.out.println("hier aantalgeraden: "+aantalgeradenParen);
+            gekozen.clear();
+        }
+        waardes.clear();
         System.out.println("aantalgeraden paren"+aantalgeradenParen);
         if(aantalgeradenParen==8) {
             System.out.println("open window");
@@ -411,18 +462,77 @@ public class GameWindowController implements Initializable {
                 @Override
                 public void handle(WorkerStateEvent event) {
                     System.out.println("awake");
-                    resetKeuzes();
+                    resetListenKeuzes();
 
 
                 }
             });
+            if(waardes.get(0)==waardes.get(1))aantalgeradenParen++;
             new Thread(sleeper).start();
 
         }
     }
     public void listen(){
 
-        new Thread(listenerHelper).start();
+        /*Task<Void> task = new Task<Void>() {
+            @Override protected Void call() throws Exception {
+                System.out.println("hier");
+                impl.addToGame(sessionToken, aantalspelers);
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        playerGevonden(sessionToken);
+                    }
+                });
+                System.out.println("player gevonden");
+                return null;
+            }
+        };
+        Thread th = new Thread(task);
+
+        th.setDaemon(true);
+
+        th.start();
+        System.out.println("zoeken naar ander"+ sessionToken);
+    */
+
+
+        ///////
+        try {
+            Task<Void> task = new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+                    while (!impl.checkBeurt(sessionToken)) {
+                        int[] gok = impl.getAndereGok(sessionToken);
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                incomingGok(gok);
+                            }
+                        });
+
+                    }
+                    System.out.println("change beurt");
+                    setBeurt();
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            setLabel();
+                        }
+                    });
+                    return null;
+                }
+            };
+
+            Thread th=new Thread(task);
+            th.setDaemon(true);
+            th.start();
+
+
+        }
+        catch (Exception e){
+            System.out.println("this failed");
+        }
 
 
     }

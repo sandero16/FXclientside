@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.application.Platform;
+import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -26,19 +28,38 @@ public class waitingRoomController implements Initializable {
     public void waitForOtherPlayer(String sessionToken, int aantalspelers){
         System.out.println("starting thread sessiontoken" +sessionToken);
         try {
+            /*Platform.runLater(new Runnable() {
+                @Override public void run() {
+                    try {
+                        System.out.println("hier");
+                        impl.addToGame(sessionToken, aantalspelers);
+                        playerGevonden(sessionToken);
+                        System.out.println("player gevonden");
+                    }
+                    catch (Exception e){
+                        System.out.println("failed");
+                    }
+                }
+            });*/
             Task<Void> task = new Task<Void>() {
                 @Override protected Void call() throws Exception {
                     System.out.println("hier");
                     impl.addToGame(sessionToken, aantalspelers);
-                    playerGevonden(sessionToken);
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            playerGevonden(sessionToken);
+                        }
+                    });
                     System.out.println("player gevonden");
                     return null;
                 }
             };
-            new Thread(task).start();
+            Thread th = new Thread(task);
 
+            th.setDaemon(true);
 
-
+            th.start();
             System.out.println("zoeken naar ander"+ sessionToken);
 
         }
@@ -69,6 +90,7 @@ public class waitingRoomController implements Initializable {
             Parent root=Loader.getRoot();
             stage.setTitle("Game");
             stage.setScene(new Scene(root, 300, 275));
+            System.out.println("nieuw spel");
             stage.show();
             Stage oldstage  = (Stage) statusLabel.getScene().getWindow();
             oldstage.close();

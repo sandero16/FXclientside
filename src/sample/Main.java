@@ -26,7 +26,7 @@ public class Main extends Application {
 // search for CounterService
             Counter impl= (Counter) myRegistry.lookup("Login");
 
-
+            System.out.println("running");
         FXMLLoader Loader=new FXMLLoader();
         Loader.setLocation(getClass().getResource("startWindow.fxml"));
         try{
