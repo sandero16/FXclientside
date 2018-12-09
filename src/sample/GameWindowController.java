@@ -312,25 +312,24 @@ public class GameWindowController implements Initializable {
     }
     public void resetListenKeuzes() {
         System.out.println("waardes: " + waardes.get(0) + " " + waardes.get(1));
-        if (waardes.get(0) != waardes.get(1)) {
-            System.out.println(gekozen.size());
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    for (Button b : gekozen) {
-                        System.out.println("button");
-                        b.setText("*");
-                    }
-                    gekozen.clear();
+        System.out.println(gekozen.size());
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                for (Button b : gekozen) {
+                    System.out.println("button");
+                    b.setText("*");
                 }
-            });
-        }
-        else{
-            System.out.println("hier aantalgeraden: "+aantalgeradenParen);
-            gekozen.clear();
-        }
+                gekozen.clear();
+            }
+        });
         waardes.clear();
+    }
+    public void clearWaardes(){
+        System.out.println("hier aantalgeraden: "+aantalgeradenParen);
+        gekozen.clear();
         System.out.println("aantalgeraden paren"+aantalgeradenParen);
+        waardes.clear();
         if(aantalgeradenParen==8) {
             System.out.println("open window");
             Platform.runLater(new Runnable() {
@@ -339,8 +338,6 @@ public class GameWindowController implements Initializable {
                     openEndWindow();
                 }
             });
-
-
         }
     }
     public void openEndWindow(){
@@ -378,7 +375,6 @@ public class GameWindowController implements Initializable {
         switch (button) {
             case 1:
                 button1.setText(Integer.toString(waarde));
-
                 gekozen.add(button1);
                 break;
             case 2:
@@ -467,8 +463,13 @@ public class GameWindowController implements Initializable {
 
                 }
             });
-            if(waardes.get(0)==waardes.get(1))aantalgeradenParen++;
-            new Thread(sleeper).start();
+            if(waardes.get(0)==waardes.get(1)){
+                aantalgeradenParen++;
+                clearWaardes();
+            }
+            else {
+                new Thread(sleeper).start();
+            }
 
         }
     }

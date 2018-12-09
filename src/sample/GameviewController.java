@@ -48,7 +48,6 @@ public class GameviewController implements Initializable {
             waardes=new ArrayList<>();
             gekozen=new ArrayList<>();
             aantalgeradenParen=0;
-
         }
         catch (Exception e){
 
