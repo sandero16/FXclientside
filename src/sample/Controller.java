@@ -22,7 +22,7 @@ public class Controller implements Initializable {
     public TextField username;
     public PasswordField password;
     public Label statuslabel;
-    public Counter impl;
+    public DispatchingInterface impl;
     public Button testbutton;
     private String sessionToken;
 
@@ -49,7 +49,7 @@ public class Controller implements Initializable {
     public void checkLogin(ActionEvent actionEvent){
 
     }
-    public void setInterface(Counter impl){
+    public void setInterface(DispatchingInterface impl){
         this.impl=impl;
     }
     public void LoginScherm(){
@@ -97,8 +97,8 @@ public class Controller implements Initializable {
         }
         Stage stage=new Stage();
         GameviewController controller =Loader.getController();
-        controller.setInterface(impl);
-        controller.setListenHelperViewer(new ListenHelperViewer(controller,impl));
+      //  controller.setInterface(impl);
+       // controller.setListenHelperViewer(new ListenHelperViewer(controller,impl));
         Parent root=Loader.getRoot();
         stage.setTitle("gamewindow");
         stage.setScene(new Scene(root, 300, 275));

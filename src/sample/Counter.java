@@ -1,5 +1,7 @@
 package sample;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -13,7 +15,7 @@ public interface Counter extends Remote {
     int[]getGameGok(int i, int viewerId) throws RemoteException;
     void testConnectie() throws  RemoteException;
     boolean vindtTegenspeler(String sessionToken) throws RemoteException;
-    void addToGame(String sessionToken, int aantalspelers) throws RemoteException;
+    void addToGame(String sessionToken, int aantalspelers, boolean host) throws RemoteException;
     boolean setGame(String sessionToken) throws RemoteException;
     int getZet(int i, String sessionToken) throws RemoteException;
     void changeBeurt(String sessionToken) throws RemoteException;

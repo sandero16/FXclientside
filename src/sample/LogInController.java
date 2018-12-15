@@ -19,9 +19,9 @@ public class LogInController implements Initializable {
     public PasswordField password;
     public Label label;
     public Label warningLabel;
-    public Counter impl;
+    public DispatchingInterface impl;
 
-    public void setInterface(Counter impl){
+    public void setInterface(DispatchingInterface impl){
         this.impl=impl;
     }
 
@@ -43,24 +43,25 @@ public class LogInController implements Initializable {
             writer.close();
 
             FXMLLoader Loader = new FXMLLoader();
-            Loader.setLocation(getClass().getResource("keuzemenuSpelers.fxml"));
+            Loader.setLocation(getClass().getResource("hostJoin.fxml"));
             try {
                 Loader.load();
             } catch (IOException ioe) {
             }
 
             Stage stage = new Stage();
-            keuzeMenuSpelersController controller = Loader.getController();
+            HostJoinController controller = Loader.getController();
             controller.setInterface(impl);
             controller.setSessiontoken(sessionToken);
             Parent root = Loader.getRoot();
-            stage.setTitle("keuzespelers");
+            stage.setTitle("keuzeJoinHost");
             stage.setScene(new Scene(root, 300, 275));
             stage.show();
 
 
             Stage oldstage = (Stage) username.getScene().getWindow();
             oldstage.close();
+
 
 
         } catch (Exception e) {

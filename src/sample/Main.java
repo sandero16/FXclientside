@@ -17,16 +17,18 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        try{
+            //Initializing
+            Registry myDispatchRegistry = LocateRegistry.getRegistry("localhost", 1100);
+            // search for DispatchService
+            DispatchingInterface dispImpl= (DispatchingInterface) myDispatchRegistry.lookup("disp");
 
-        try {
+            System.out.println("running");
 
 // fire to localhost port 1099
             //System.setProperty("java.security.policy","file:./RMIpolicy.policy");
-            Registry myRegistry = LocateRegistry.getRegistry("localhost", 1099);
-// search for CounterService
-            Counter impl= (Counter) myRegistry.lookup("Login");
 
-            System.out.println("running");
+
         FXMLLoader Loader=new FXMLLoader();
         Loader.setLocation(getClass().getResource("startWindow.fxml"));
         try{
@@ -35,8 +37,9 @@ public class Main extends Application {
         catch (IOException ioe){
 
         }
+
         Controller controller =Loader.getController();
-        controller.setInterface(impl);
+        controller.setInterface(dispImpl);
         Parent root=Loader.getRoot();
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 300, 275));

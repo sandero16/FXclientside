@@ -1,5 +1,6 @@
 package sample;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,8 +20,9 @@ public class keuzeMenuSpelersController  implements Initializable {
     public Button drie;
     public Button vier;
     public Button afmelden;
-    public Counter impl;
+    public DispatchingInterface impl;
     public String sessionToken;
+    public Boolean host=false;
 
 
 
@@ -37,7 +39,8 @@ public class keuzeMenuSpelersController  implements Initializable {
     public void vierclicked() {
         openWaitingRoom(4);
     }
-    public void setInterface(Counter impl) {
+    public void setHost(){this.host=true;}
+    public void setInterface(DispatchingInterface impl) {
         this.impl=impl;
     }
     public void setSessiontoken(String sessionToken) {
@@ -73,7 +76,7 @@ public class keuzeMenuSpelersController  implements Initializable {
         Stage oldstage  = (Stage) twee.getScene().getWindow();
         oldstage.close();
         System.out.println("ik ben er nog");
-        controller.waitForOtherPlayer(sessionToken, spelers);
+        controller.waitForOtherPlayer(sessionToken, spelers, host);
     }
 
 }

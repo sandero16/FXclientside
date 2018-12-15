@@ -13,19 +13,23 @@ import javafx.stage.Stage;
 import javax.swing.tree.ExpandVetoException;
 import java.io.IOException;
 import java.net.URL;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ResourceBundle;
 
 public class waitingRoomController implements Initializable {
     public Label statusLabel;
-    public Counter impl;
+    public DispatchingInterface impl;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
-    public void setInterface(Counter impl){
+    public void setInterface(DispatchingInterface impl){
         this.impl=impl;
     }
-    public void waitForOtherPlayer(String sessionToken, int aantalspelers){
+    public void waitForOtherPlayer(String sessionToken, int aantalspelers, boolean host){
         System.out.println("starting thread sessiontoken" +sessionToken);
         try {
             /*Platform.runLater(new Runnable() {
@@ -44,11 +48,16 @@ public class waitingRoomController implements Initializable {
             Task<Void> task = new Task<Void>() {
                 @Override protected Void call() throws Exception {
                     System.out.println("hier");
-                    impl.addToGame(sessionToken, aantalspelers);
+                    int poortnr=impl.addToGame(sessionToken, aantalspelers, host);
+                    System.out.println("poortnummer: "+poortnr);
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            playerGevonden(sessionToken);
+                            try {
+                                playerGevonden(sessionToken, poortnr);
+                            }catch (Exception e){
+
+                            }
                         }
                     });
                     System.out.println("player gevonden");
@@ -72,7 +81,12 @@ public class waitingRoomController implements Initializable {
 
 
         }
-        public void playerGevonden(String sessionToken){
+        public void playerGevonden(String sessionToken, int poortnummer) throws RemoteException, NotBoundException {
+
+            Registry myRegistry = LocateRegistry.getRegistry("localhost", poortnummer);
+// search for CounterService
+            Counter impl= (Counter) myRegistry.lookup("Login");
+            impl.testConnectie();
             System.out.println("game started");
             FXMLLoader Loader=new FXMLLoader();
             Loader.setLocation(getClass().getResource("gameWindow.fxml"));

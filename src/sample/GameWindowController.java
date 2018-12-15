@@ -60,6 +60,7 @@ public class GameWindowController implements Initializable {
     public void setGame(String sessionToken){
         try{
             this.sessionToken=sessionToken;
+            impl.testConnectie();
             beurt=impl.setGame(sessionToken);
             aantalgeradenParen=0;
             gekozen=new ArrayList<>();

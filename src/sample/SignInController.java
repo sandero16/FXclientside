@@ -13,13 +13,13 @@ public class SignInController implements Initializable {
     public TextField SignInWW1;
     public TextField SignInWW2;
     public Label warningLabel;
-    public Counter impl;
+    public DispatchingInterface impl;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
-    public void setInterface(Counter impl){
+    public void setInterface(DispatchingInterface impl){
         this.impl=impl;
     }
     public void sendSignIn(){
@@ -42,7 +42,7 @@ public class SignInController implements Initializable {
                 warningLabel.setText("Username al in gebruik");
                 return;
             }
-
+            System.out.println("gelukt");
 
             Stage stage  = (Stage) SignInUsername.getScene().getWindow();
             stage.close();

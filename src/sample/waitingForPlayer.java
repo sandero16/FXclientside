@@ -28,7 +28,7 @@ public class waitingForPlayer implements Runnable {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    controller.playerGevonden(sessionToken);
+                    //controller.playerGevonden(sessionToken);
                 }
             });
 
