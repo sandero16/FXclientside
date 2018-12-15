@@ -12,6 +12,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 
 public class LogInController implements Initializable {
@@ -25,12 +27,31 @@ public class LogInController implements Initializable {
         this.impl=impl;
     }
 
+
+    private static String bytesToHex(byte[] hash) {
+        StringBuffer hexString = new StringBuffer();
+        for (int i = 0; i < hash.length; i++) {
+            String hex = Integer.toHexString(0xff & hash[i]);
+            if(hex.length() == 1) hexString.append('0');
+            hexString.append(hex);
+        }
+        return hexString.toString();
+    }
     public void sendLogin() {
         try {
 
             String name = username.getText();
             String ww = password.getText();
-            String sessionToken = impl.LogIn(name, ww);
+            // hashing ww
+            MessageDigest digest = null;
+            try {
+                digest = MessageDigest.getInstance("SHA-256");
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+            byte[] hashedBytes = digest.digest(ww.getBytes());
+            String hashedWW = bytesToHex(hashedBytes);
+            String sessionToken = impl.LogIn(name, hashedWW);
             if (sessionToken == null) {
                 warningLabel.setText("Foute login of al aangemeld");
                 return;
