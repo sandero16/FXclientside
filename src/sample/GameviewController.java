@@ -6,10 +6,7 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -19,79 +16,29 @@ public class GameviewController implements Initializable {
     public int gameIndex;
     public int viewerId;
     public ListenHelperViewer listenHelperViewer;
-    public ArrayList<ImageView> views;
-    public ArrayList<Image> images;
-    public ArrayList<ImageView> gekozen;
+
+    public ArrayList<Button> gekozen;
     public ArrayList<Integer> waardes;
 
-    public ImageView iv1;
-    public ImageView iv2;
-    public ImageView iv3;
-    public ImageView iv4;
-    public ImageView iv5;
-    public ImageView iv6;
-    public ImageView iv7;
-    public ImageView iv8;
-    public ImageView iv9;
-    public ImageView iv10;
-    public ImageView iv11;
-    public ImageView iv12;
-    public ImageView iv13;
-    public ImageView iv14;
-    public ImageView iv15;
-    public ImageView iv16;
+    public Button button1;
+    public Button button2;
+    public Button button3;
+    public Button button4;
+    public Button button5;
+    public Button button6;
+    public Button button7;
+    public Button button8;
+    public Button button9;
+    public Button button10;
+    public Button button11;
+    public Button button12;
+    public Button button13;
+    public Button button14;
+    public Button button15;
+    public Button button16;
 
     public int aantalgeradenParen;
 
-    private void initializeImages() {
-        views = new ArrayList<ImageView>();
-        images = new ArrayList<Image>(); // 8 images voor 16 plaatsen
-
-        views.add(iv1);
-        views.add(iv2);
-        views.add(iv3);
-        views.add(iv4);
-        views.add(iv5);
-        views.add(iv6);
-        views.add(iv7);
-        views.add(iv8);
-        views.add(iv9);
-        views.add(iv10);
-        views.add(iv11);
-        views.add(iv12);
-        views.add(iv13);
-        views.add(iv14);
-        views.add(iv15);
-        views.add(iv16);
-
-        File duck1 = new File("src/Images/duck1.png");
-        File duck2 = new File("src/Images/duck2.png");
-        File horse = new File("src/Images/horse.png");
-        File kitten = new File("src/Images/kitten.png");
-        File pig = new File("src/Images/pig.png");
-        File bird = new File("src/Images/bird.png");
-        File cow = new File("src/Images/cow.png");
-        File rabbit = new File("src/Images/rabbit.png");
-        File question = new File("src/Images/question.jpg");
-
-        images.add(new Image(duck1.toURI().toString()));
-        images.add(new Image(duck2.toURI().toString()));
-        images.add(new Image(horse.toURI().toString()));
-        images.add(new Image(kitten.toURI().toString()));
-        images.add(new Image(pig.toURI().toString()));
-        images.add(new Image(bird.toURI().toString()));
-        images.add(new Image(cow.toURI().toString()));
-        images.add(new Image(rabbit.toURI().toString()));
-        images.add(new Image(question.toURI().toString()));
-        System.out.println(images.size());
-        System.out.println(views.size());
-
-
-        for(ImageView iv: views) {
-            Image i = images.get(8);
-            iv.setImage(i);
-        }
-    }
 
     public void view(){
         try{
@@ -118,52 +65,52 @@ public class GameviewController implements Initializable {
     public void setPlaats(int plaats, int waarde){
         switch (plaats) {
             case 1:
-                iv1.setImage(images.get(waarde));
+                button1.setText(Integer.toString(waarde));
                 break;
             case 2:
-                iv2.setImage(images.get(waarde));
+                button2.setText(Integer.toString(waarde));
                 break;
             case 3:
-                iv3.setImage(images.get(waarde));
+                button3.setText(Integer.toString(waarde));
                 break;
             case 4:
-                iv4.setImage(images.get(waarde));
+                button4.setText(Integer.toString(waarde));
                 break;
             case 5:
-                iv5.setImage(images.get(waarde));
+                button5.setText(Integer.toString(waarde));
                 break;
             case 6:
-                iv6.setImage(images.get(waarde));
+                button6.setText(Integer.toString(waarde));
                 break;
             case 7:
-                iv7.setImage(images.get(waarde));
+                button7.setText(Integer.toString(waarde));
                 break;
             case 8:
-                iv8.setImage(images.get(waarde));
+                button8.setText(Integer.toString(waarde));
                 break;
             case 9:
-                iv9.setImage(images.get(waarde));
+                button9.setText(Integer.toString(waarde));
                 break;
             case 10:
-                iv10.setImage(images.get(waarde));
+                button10.setText(Integer.toString(waarde));
                 break;
             case 11:
-                iv11.setImage(images.get(waarde));
+                button11.setText(Integer.toString(waarde));
                 break;
             case 12:
-                iv12.setImage(images.get(waarde));
+                button12.setText(Integer.toString(waarde));
                 break;
             case 13:
-                iv13.setImage(images.get(waarde));
+                button13.setText(Integer.toString(waarde));
                 break;
             case 14:
-                iv14.setImage(images.get(waarde));
+                button14.setText(Integer.toString(waarde));
                 break;
             case 15:
-                iv15.setImage(images.get(waarde));
+                button15.setText(Integer.toString(waarde));
                 break;
             case 16:
-                iv16.setImage(images.get(waarde));
+                button16.setText(Integer.toString(waarde));
                 break;
             default:
                 break;
@@ -172,7 +119,6 @@ public class GameviewController implements Initializable {
     }
     public void startWatching(){
         try {
-            System.out.println("startwatching");
             ArrayList<ArrayList<Integer>> temp = impl.getReedsGezet(gameIndex);
             for (ArrayList<Integer> a : temp) {
                 System.out.println("hier");
@@ -202,80 +148,80 @@ public class GameviewController implements Initializable {
 
 
     public void incomingGok(int []gok) {
-        int iv = gok[0];
-        iv++;
+        int button = gok[0];
+        button++;
         int waarde = gok[1];
         waardes.add(waarde);
-        System.out.println("waarde added: "+waarde);
-        System.out.println("incoming: "+waardes.get(0));
-        switch (iv) {
+        switch (button) {
             case 1:
-                iv1.setImage(images.get(waarde));
-                gekozen.add(iv1);
+                button1.setText(Integer.toString(waarde));
+
+                gekozen.add(button1);
                 break;
             case 2:
-                iv2.setImage(images.get(waarde));
-                gekozen.add(iv2);
+                button2.setText(Integer.toString(waarde));
+                gekozen.add(button2);
                 break;
             case 3:
-                iv3.setImage(images.get(waarde));
-                gekozen.add(iv3);
+                button3.setText(Integer.toString(waarde));
+                gekozen.add(button3);
                 break;
             case 4:
-                iv4.setImage(images.get(waarde));
-                gekozen.add(iv4);
+                button4.setText(Integer.toString(waarde));
+                gekozen.add(button4);
                 break;
             case 5:
-                iv5.setImage(images.get(waarde));
-                gekozen.add(iv5);
+                button5.setText(Integer.toString(waarde));
+                gekozen.add(button5);
                 break;
             case 6:
-                iv6.setImage(images.get(waarde));
-                gekozen.add(iv6);
+                button6.setText(Integer.toString(waarde));
+                gekozen.add(button6);
                 break;
             case 7:
-                iv7.setImage(images.get(waarde));
-                gekozen.add(iv7);
+                button7.setText(Integer.toString(waarde));
+                gekozen.add(button7);
                 break;
             case 8:
-                iv8.setImage(images.get(waarde));
-                gekozen.add(iv8);
+                button8.setText(Integer.toString(waarde));
+                gekozen.add(button8);
                 break;
             case 9:
-                iv9.setImage(images.get(waarde));
-                gekozen.add(iv9);
+                button9.setText(Integer.toString(waarde));
+                gekozen.add(button9);
                 break;
             case 10:
-                iv10.setImage(images.get(waarde));
-                gekozen.add(iv10);
+                button10.setText(Integer.toString(waarde));
+                gekozen.add(button10);
                 break;
             case 11:
-                iv11.setImage(images.get(waarde));
-                gekozen.add(iv11);
+                button11.setText(Integer.toString(waarde));
+                gekozen.add(button11);
                 break;
             case 12:
-                iv12.setImage(images.get(waarde));
-                gekozen.add(iv12);
+                button12.setText(Integer.toString(waarde));
+                gekozen.add(button12);
                 break;
             case 13:
-                iv13.setImage(images.get(waarde));
-                gekozen.add(iv13);
+                button13.setText(Integer.toString(waarde));
+                gekozen.add(button13);
                 break;
             case 14:
-                iv14.setImage(images.get(waarde));
-                gekozen.add(iv14);
+                button14.setText(Integer.toString(waarde));
+                gekozen.add(button14);
                 break;
             case 15:
-                iv15.setImage(images.get(waarde));
-                gekozen.add(iv15);
+                button15.setText(Integer.toString(waarde));
+                gekozen.add(button15);
                 break;
             case 16:
-                iv16.setImage(images.get(waarde));
-                gekozen.add(iv16);
+                button16.setText(Integer.toString(waarde));
+                gekozen.add(button16);
                 break;
             default:
                 break;
         }
+
         if (waardes.size() == 2) {
 
             Task<Void> sleeper = new Task<Void>() {
@@ -313,8 +259,8 @@ public class GameviewController implements Initializable {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        for (ImageView iw : gekozen) {
-                            iw.setImage(images.get(8));
+                        for (Button b : gekozen) {
+                            b.setText("*");
                         }
                     }
                 });
@@ -364,8 +310,8 @@ public class GameviewController implements Initializable {
         sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent event) {
-                for (ImageView iw : gekozen) {
-                    iw.setImage(images.get(8));
+                for (Button b: gekozen) {
+                    b.setText("*");
                 }
             }
         });
@@ -374,6 +320,6 @@ public class GameviewController implements Initializable {
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        initializeImages();
+
     }
 }
