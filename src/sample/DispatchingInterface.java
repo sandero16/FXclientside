@@ -9,5 +9,6 @@ public interface DispatchingInterface extends Remote{
     String LogIn(String a, String b) throws RemoteException;
     void logOut(String sessionToken) throws RemoteException;
     int addToGame(String sessionToken, int aantalspelers, boolean host) throws RemoteException;
+    int getGameServer() throws RemoteException;
 
 }

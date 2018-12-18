@@ -76,7 +76,7 @@ public class LogInController implements Initializable {
             controller.setSessiontoken(sessionToken);
             Parent root = Loader.getRoot();
             stage.setTitle("keuzeJoinHost");
-            stage.setScene(new Scene(root, 300, 275));
+            stage.setScene(new Scene(root, 600, 275));
             stage.show();
 
 

@@ -103,7 +103,7 @@ public class waitingRoomController implements Initializable {
             controller.setHelper(new ListenerHelper(controller,impl,sessionToken));
             Parent root=Loader.getRoot();
             stage.setTitle("Game");
-            stage.setScene(new Scene(root, 300, 275));
+            stage.setScene(new Scene(root, 780, 840));
             System.out.println("nieuw spel");
             stage.show();
             Stage oldstage  = (Stage) statusLabel.getScene().getWindow();

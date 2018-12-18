@@ -32,7 +32,7 @@ public class Controller implements Initializable {
     public Label warningLabel;
 
     public void sayHelloWorld(ActionEvent actionEvent){
-        helloWorld.setText("Hello world");
+        helloWorld.setText("Memoryzzz");
     }
 
     public void setToken(String sessionToken){
@@ -76,7 +76,7 @@ public class Controller implements Initializable {
             controller.setInterface(impl);
             Parent root=Loader.getRoot();
             stage.setTitle("Hello World");
-            stage.setScene(new Scene(root, 300, 275));
+            stage.setScene(new Scene(root, 350, 400));
             stage.show();
 
 
@@ -97,11 +97,11 @@ public class Controller implements Initializable {
         }
         Stage stage=new Stage();
         GameviewController controller =Loader.getController();
-      //  controller.setInterface(impl);
-       // controller.setListenHelperViewer(new ListenHelperViewer(controller,impl));
+        controller.setInterface(impl);
+        controller.setListenHelperViewer(new ListenHelperViewer(controller));
         Parent root=Loader.getRoot();
         stage.setTitle("gamewindow");
-        stage.setScene(new Scene(root, 300, 275));
+        stage.setScene(new Scene(root, 780, 840));
         stage.show();
         controller.view();
     }
@@ -123,7 +123,7 @@ public class Controller implements Initializable {
             controller.setInterface(impl);
             Parent root=Loader.getRoot();
             stage.setTitle("Hello World");
-            stage.setScene(new Scene(root, 300, 275));
+            stage.setScene(new Scene(root, 375, 450));
             stage.show();
 
 

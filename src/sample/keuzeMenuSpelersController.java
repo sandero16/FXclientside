@@ -70,7 +70,7 @@ public class keuzeMenuSpelersController  implements Initializable {
         controller.setInterface(impl);
         Parent root=Loader.getRoot();
         stage.setTitle("waitingroom");
-        stage.setScene(new Scene(root, 300, 275));
+        stage.setScene(new Scene(root, 600, 400));
         stage.show();
         System.out.println("sessiontoken: "+sessionToken);
         Stage oldstage  = (Stage) twee.getScene().getWindow();

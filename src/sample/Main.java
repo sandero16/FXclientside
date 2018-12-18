@@ -41,8 +41,8 @@ public class Main extends Application {
         Controller controller =Loader.getController();
         controller.setInterface(dispImpl);
         Parent root=Loader.getRoot();
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setTitle("Memoryzzz");
+        primaryStage.setScene(new Scene(root, 300, 400));
         primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();

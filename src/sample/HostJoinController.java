@@ -49,8 +49,8 @@ public class HostJoinController implements Initializable {
         controller.setInterface(impl);
         controller.setSessiontoken(sessionToken);
         Parent root = Loader.getRoot();
-        stage.setTitle("keuzeJoinHost");
-        stage.setScene(new Scene(root, 300, 275));
+        stage.setTitle("Memoryzzz");
+        stage.setScene(new Scene(root, 650, 600));
         stage.show();
 
 
@@ -73,8 +73,8 @@ public class HostJoinController implements Initializable {
        controller.setSessiontoken(sessionToken);
        controller.setHost();
        Parent root = Loader.getRoot();
-       stage.setTitle("keuzeJoinHost");
-       stage.setScene(new Scene(root, 300, 275));
+       stage.setTitle("MemoryZZZ");
+       stage.setScene(new Scene(root, 650, 600));
        stage.show();
 
 
