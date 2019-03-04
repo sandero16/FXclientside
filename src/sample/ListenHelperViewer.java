@@ -7,14 +7,14 @@ import java.rmi.registry.Registry;
 
 public class ListenHelperViewer implements Runnable {
     GameviewController gameviewController;
-    Counter impl;
+    AppInterface impl;
     int viewerId;
     int game;
 
     public ListenHelperViewer(GameviewController gameviewController) {
         this.gameviewController = gameviewController;
     }
-    public void addImpl(Counter impl){
+    public void addImpl(AppInterface impl){
         this.impl = impl;
     }
     public void setGame(int game) {
@@ -28,24 +28,18 @@ public class ListenHelperViewer implements Runnable {
     public void run() {
 
         try {
-            System.out.println("buiten");
             while (!impl.getEnd(game)) {
                 int[] gok = impl.getGameGok(game, viewerId);
                 if(gok[0]>100){
                     int nieuwAddres=gok[0];
-                    System.out.println("het nieuwe adress is: "+nieuwAddres);
                     Registry myRegistry = LocateRegistry.getRegistry("localhost", nieuwAddres);
-// search for CounterService
-                    impl= (Counter) myRegistry.lookup("Login");
+                    // search for CounterService
+                    impl= (AppInterface) myRegistry.lookup("Login");
 
                     gok=impl.getGameInhaalGok(game, viewerId);
-                    ///
-                    for (int i: gok) {
-                        System.out.println("gok part: "+i);
-                    }
+
                 }
                 int[] finalgok=gok;
-                System.out.println("gok gevonden");
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {

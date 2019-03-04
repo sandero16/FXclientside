@@ -5,7 +5,6 @@ import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -18,7 +17,7 @@ import java.util.ResourceBundle;
 
 public class GameviewController implements Initializable {
     public DispatchingInterface impl;
-    public Counter counterImpl;
+    public AppInterface appInterfaceImpl;
     public int gameIndex;
     public int viewerId;
     public ListenHelperViewer listenHelperViewer;
@@ -104,16 +103,12 @@ public class GameviewController implements Initializable {
             }
             else {
                 Registry myRegistry = LocateRegistry.getRegistry("localhost", serverAdres);
-// search for CounterService
-                counterImpl = (Counter) myRegistry.lookup("Login");
-                listenHelperViewer.addImpl(counterImpl);
+                // search for CounterService
+                appInterfaceImpl = (AppInterface) myRegistry.lookup("Login");
+                listenHelperViewer.addImpl(appInterfaceImpl);
 
-                ///
-                counterImpl.testConnectie();
-                ///
-                gameIndex=counterImpl.getGame(0);
-                System.out.println("watchgame: " + gameIndex);
-                viewerId = counterImpl.getViewerId(gameIndex);
+                gameIndex= appInterfaceImpl.getGame(0);
+                viewerId = appInterfaceImpl.getViewerId(gameIndex);
                 waardes = new ArrayList<>();
                 gekozen = new ArrayList<>();
                 aantalgeradenParen = 0;
@@ -188,14 +183,11 @@ public class GameviewController implements Initializable {
     }
     public void startWatching(){
         try {
-            ArrayList<ArrayList<Integer>> temp = counterImpl.getReedsGezet(gameIndex);
+            ArrayList<ArrayList<Integer>> temp = appInterfaceImpl.getReedsGezet(gameIndex);
             for (ArrayList<Integer> a : temp) {
-                System.out.println("hier");
                 int value=a.get(0);
                 int plaats1=a.get(1)+1;
-                System.out.println("plaats1"+plaats1);
                 int plaats2=a.get(2)+1;
-                System.out.println("plaats2"+plaats2);
 
                 setPlaats(plaats1, value);
                 setPlaats(plaats2, value);
@@ -296,7 +288,6 @@ public class GameviewController implements Initializable {
                 @Override
                 protected Void call() throws Exception {
                     try {
-                        System.out.println("sleep");
                         Thread.sleep(2000);
                     } catch (InterruptedException e) {
                     }
@@ -306,10 +297,7 @@ public class GameviewController implements Initializable {
             sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
                 @Override
                 public void handle(WorkerStateEvent event) {
-                    System.out.println("awake");
                     resetKeuzes();
-
-
                 }
             });
             new Thread(sleeper).start();
@@ -318,7 +306,6 @@ public class GameviewController implements Initializable {
     }
     public void resetKeuzes(){
             if (waardes.get(0) == waardes.get(1)) {
-                System.out.println("ze zijn gelijk");
                 aantalgeradenParen++;
                 gekozen.clear();
 
@@ -333,28 +320,10 @@ public class GameviewController implements Initializable {
                     }
                 });
             }
-            /*
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(4000);
-                        } catch (Exception e) {
-                            System.out.println("thread kan niet slapen");
-                        }
-                        for (Button b : gekozen) {
-                            b.setText("*");
-                        }
-                        gekozen.clear();
-                    }
-                });
-                */
 
 
             waardes.clear();
-            System.out.println("aantalgeraden paren"+aantalgeradenParen);
             if(aantalgeradenParen==8) {
-                System.out.println("open window");
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {

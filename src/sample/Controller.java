@@ -18,51 +18,17 @@ import java.rmi.registry.Registry;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
-    public Label helloWorld;
-    public TextField username;
-    public PasswordField password;
-    public Label statuslabel;
+
     public DispatchingInterface impl;
-    public Button testbutton;
-    private String sessionToken;
 
-    public TextField SignInUsername;
-    public TextField SignInWW1;
-    public TextField SignInWW2;
-    public Label warningLabel;
-
-    public void sayHelloWorld(ActionEvent actionEvent){
-        helloWorld.setText("Memoryzzz");
-    }
-
-    public void setToken(String sessionToken){
-        this.sessionToken=sessionToken;
-    }
-
-    public void OpeningGame(){
-
-    }
-    public void buttonTest(ActionEvent ae){
-        testbutton.setText("veranderd");
-
-    }
-    public void checkLogin(ActionEvent actionEvent){
-
-    }
     public void setInterface(DispatchingInterface impl){
         this.impl=impl;
     }
     public void LoginScherm(){
         try {
 
-            /*Registry myRegistry = LocateRegistry.getRegistry("localhost", 1099);
-// search for CounterService
-            impl = (Counter) myRegistry.lookup("Login");
-
-*/
             impl.testConnectie();
 
-            System.out.println("loginscherm");
             FXMLLoader Loader=new FXMLLoader();
             Loader.setLocation(getClass().getResource("logIn.fxml"));
             try{
@@ -75,7 +41,7 @@ public class Controller implements Initializable {
             LogInController controller =Loader.getController();
             controller.setInterface(impl);
             Parent root=Loader.getRoot();
-            stage.setTitle("Hello World");
+            stage.setTitle("Memoryzzz");
             stage.setScene(new Scene(root, 350, 400));
             stage.show();
 

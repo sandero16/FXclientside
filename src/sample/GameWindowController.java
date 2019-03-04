@@ -9,7 +9,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -21,10 +20,9 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.TreeMap;
 
 public class GameWindowController implements Initializable {
-    public Counter impl;
+    public AppInterface impl;
     public boolean beurt;
     public ArrayList<Integer> waardes;
     public ArrayList<Integer>geraden;
@@ -110,7 +108,7 @@ public class GameWindowController implements Initializable {
             iv.setImage(i);
         }
     }
-    public void setInterface(Counter impl){
+    public void setInterface(AppInterface impl){
         this.impl=impl;
     }
 
@@ -124,11 +122,9 @@ public class GameWindowController implements Initializable {
             waardes=new ArrayList<>();
             aantalKeuzes=0;
             if(beurt){
-                System.out.println("jouw beurt");
                 statuslabel.setText("het is jouw beurt");
             }
             else{
-                System.out.println("niet jouw beurt");
                 statuslabel.setText("het is aan de andere");
                 listen();
             }
@@ -259,22 +255,19 @@ public class GameWindowController implements Initializable {
                 int temp=impl.getZet(i, sessionToken);
                 if(temp>100){
                     int nieuwAdres=temp;
-                    System.out.println("nieuw adres"+temp);
                     Registry myRegistry = LocateRegistry.getRegistry("localhost", nieuwAdres);
-// search for CounterService
-                    impl= (Counter) myRegistry.lookup("Login");
+                    // search for CounterService
+                    impl= (AppInterface) myRegistry.lookup("Login");
                     impl.testConnectie();
                     temp=impl.getZet(i, sessionToken);
 
                 }
                 waardes.add(temp);
-                System.out.println("aantalkeuzes: "+aantalKeuzes);
                 if(!checkBonusZet()){
                     if(aantalKeuzes==2) {
                         impl.changeBeurt(sessionToken);
                     }
                 }
-                //TODO hier poortnummer terug geven
                 impl.geefNotify(sessionToken);
 
                 changeState();
@@ -307,7 +300,6 @@ public class GameWindowController implements Initializable {
                 @Override
                 protected Void call() throws Exception {
                     try {
-                        System.out.println("sleep");
                         Thread.sleep(2000);
                     } catch (InterruptedException e) {
                     }
@@ -317,7 +309,6 @@ public class GameWindowController implements Initializable {
             sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
                 @Override
                 public void handle(WorkerStateEvent event) {
-                    System.out.println("awake");
                     resetKeuzes();
 
 
@@ -326,7 +317,6 @@ public class GameWindowController implements Initializable {
             if (aantalKeuzes == 2) {
                 //resetten keuzes
                 aantalKeuzes = 0;
-                System.out.println("waarde 1: "+waardes.get(0)+" waarde 2:"+waardes.get(1));
                 if (waardes.get(0) == waardes.get(1)) {
                     score++;
                     aantalgeradenParen++;
@@ -334,7 +324,6 @@ public class GameWindowController implements Initializable {
                     gekozen.clear();
                     waardes.clear();
                     if(aantalgeradenParen==8){
-                        System.out.println("open window");
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
@@ -344,7 +333,6 @@ public class GameWindowController implements Initializable {
 
                     }
                 } else {
-                    System.out.println("het is aan de andere");
                     statuslabel.setText("het is aan de andere");
                     beurt=false;
                     new Thread(sleeper).start();
@@ -364,13 +352,10 @@ public class GameWindowController implements Initializable {
         beurt=true;
     }
     public void resetKeuzes() {
-        System.out.println("waardes: " + waardes.get(0) + " " + waardes.get(1));
-        System.out.println(gekozen.size());
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 for (ImageView iv : gekozen) {
-                    System.out.println("button");
                     iv.setImage(images.get(8));
                 }
                 gekozen.clear();
@@ -378,10 +363,8 @@ public class GameWindowController implements Initializable {
         });
 
         waardes.clear();
-        System.out.println("aantalgeraden paren"+aantalgeradenParen);
         //check if the game is ended
         if(aantalgeradenParen==8) {
-            System.out.println("open window");
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -393,13 +376,10 @@ public class GameWindowController implements Initializable {
         }
     }
     public void resetListenKeuzes() {
-        System.out.println("waardes: " + waardes.get(0) + " " + waardes.get(1));
-        System.out.println(gekozen.size());
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 for (ImageView iv : gekozen) {
-                    System.out.println("button");
                     iv.setImage(images.get(8));
                 }
                 gekozen.clear();
@@ -408,12 +388,9 @@ public class GameWindowController implements Initializable {
         waardes.clear();
     }
     public void clearWaardes(){
-        System.out.println("hier aantalgeraden: "+aantalgeradenParen);
         gekozen.clear();
-        System.out.println("aantalgeraden paren"+aantalgeradenParen);
         waardes.clear();
         if(aantalgeradenParen==8) {
-            System.out.println("open window");
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -423,7 +400,6 @@ public class GameWindowController implements Initializable {
         }
     }
     public void openEndWindow(){
-        System.out.println("binnen in openendwindow");
         FXMLLoader Loader = new FXMLLoader();
         Loader.setLocation(getClass().getResource("eindeSpel.fxml"));
         try {
@@ -431,13 +407,10 @@ public class GameWindowController implements Initializable {
         } catch (Exception e) {
             System.out.println("failed");
         }
-        System.out.println("1e");
+
         Stage endstage=new Stage();
-        System.out.println("2");
         eindeSpelController controller = Loader.getController();
-        System.out.println("3");
         controller.getResults(impl, sessionToken, score);
-        System.out.println("4");
         Parent root = Loader.getRoot();
         endstage.setTitle("Game");
         endstage.setScene(new Scene(root, 300, 275));
@@ -452,8 +425,6 @@ public class GameWindowController implements Initializable {
         button++;
         int waarde = gok[1];
         waardes.add(waarde);
-        System.out.println("waarde added: "+waarde);
-        System.out.println("incoming: "+waardes.get(0));
         switch (button) {
             case 1:
                 iv1.setImage(images.get(waarde));
@@ -529,7 +500,6 @@ public class GameWindowController implements Initializable {
                 @Override
                 protected Void call() throws Exception {
                     try {
-                        System.out.println("sleep");
                         Thread.sleep(2000);
                     } catch (InterruptedException e) {
                     }
@@ -539,7 +509,6 @@ public class GameWindowController implements Initializable {
             sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
                 @Override
                 public void handle(WorkerStateEvent event) {
-                    System.out.println("awake");
                     resetListenKeuzes();
 
 
@@ -557,30 +526,6 @@ public class GameWindowController implements Initializable {
     }
     public void listen(){
 
-        /*Task<Void> task = new Task<Void>() {
-            @Override protected Void call() throws Exception {
-                System.out.println("hier");
-                impl.addToGame(sessionToken, aantalspelers);
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        playerGevonden(sessionToken);
-                    }
-                });
-                System.out.println("player gevonden");
-                return null;
-            }
-        };
-        Thread th = new Thread(task);
-
-        th.setDaemon(true);
-
-        th.start();
-        System.out.println("zoeken naar ander"+ sessionToken);
-    */
-
-
-        ///////
         try {
             Task<Void> task = new Task<Void>() {
                 @Override
@@ -589,10 +534,9 @@ public class GameWindowController implements Initializable {
                         int[] gok = impl.getAndereGok(sessionToken);
                         if(gok[0]>100){
                             int nieuwAddres=gok[0];
-                            System.out.println("het nieuwe adress is: "+nieuwAddres);
                             Registry myRegistry = LocateRegistry.getRegistry("localhost", nieuwAddres);
-// search for CounterService
-                            impl= (Counter) myRegistry.lookup("Login");
+                            // search for CounterService
+                            impl= (AppInterface) myRegistry.lookup("Login");
 
                              gok=impl.getAndereGok(sessionToken);
                         }
@@ -605,7 +549,6 @@ public class GameWindowController implements Initializable {
                         });
 
                     }
-                    System.out.println("change beurt");
                     setBeurt();
                     Platform.runLater(new Runnable() {
                         @Override

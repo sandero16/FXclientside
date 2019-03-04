@@ -6,7 +6,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-public interface Counter extends Remote {
+public interface AppInterface extends Remote {
     int[]getAndereGok(String sessionToken) throws  RemoteException;
     int[]getGameGok(int i, int viewerId) throws RemoteException;
     void testConnectie() throws  RemoteException;

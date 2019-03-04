@@ -4,16 +4,14 @@ import javafx.application.Platform;
 
 public class ListenerHelper implements Runnable {
     GameWindowController gameWindowController;
-    Counter impl;
+    AppInterface impl;
     String sessionToken;
 
 
-    public ListenerHelper(GameWindowController gameWindowController, Counter impl,String sessionToken){
+    public ListenerHelper(GameWindowController gameWindowController, AppInterface impl, String sessionToken){
         this.gameWindowController=gameWindowController;
         this.impl=impl;
         this.sessionToken=sessionToken;
-
-
     }
 
     public void run(){
@@ -31,8 +29,6 @@ public class ListenerHelper implements Runnable {
                     Thread.sleep(800);
                 }
             }
-
-           // gameWindowController.resetKeuzes();
             gameWindowController.setBeurt();
             Platform.runLater(new Runnable() {
                 @Override

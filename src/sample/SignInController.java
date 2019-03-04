@@ -40,10 +40,8 @@ public class SignInController implements Initializable {
             String signInww=SignInWW1.getText();
             String signInww2=SignInWW2.getText();
 
-            System.out.println(name+" " +signInww+" "+signInww2);
 
             while(!signInww.equals(signInww2)){
-                System.out.println("niet identiek");
                 warningLabel.setText("ww zijn niet identiek");
                 return;
             }

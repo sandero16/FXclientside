@@ -1,7 +1,6 @@
 package sample;
 
 import javafx.application.Platform;
-import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -10,8 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import javax.swing.tree.ExpandVetoException;
-import java.io.IOException;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -30,26 +27,10 @@ public class waitingRoomController implements Initializable {
         this.impl=impl;
     }
     public void waitForOtherPlayer(String sessionToken, int aantalspelers, boolean host){
-        System.out.println("starting thread sessiontoken" +sessionToken);
         try {
-            /*Platform.runLater(new Runnable() {
-                @Override public void run() {
-                    try {
-                        System.out.println("hier");
-                        impl.addToGame(sessionToken, aantalspelers);
-                        playerGevonden(sessionToken);
-                        System.out.println("player gevonden");
-                    }
-                    catch (Exception e){
-                        System.out.println("failed");
-                    }
-                }
-            });*/
             Task<Void> task = new Task<Void>() {
                 @Override protected Void call() throws Exception {
-                    System.out.println("hier");
                     int poortnr=impl.addToGame(sessionToken, aantalspelers, host);
-                    System.out.println("poortnummer: "+poortnr);
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
@@ -60,7 +41,6 @@ public class waitingRoomController implements Initializable {
                             }
                         }
                     });
-                    System.out.println("player gevonden");
                     return null;
                 }
             };
@@ -85,7 +65,7 @@ public class waitingRoomController implements Initializable {
 
             Registry myRegistry = LocateRegistry.getRegistry("localhost", poortnummer);
 // search for CounterService
-            Counter impl= (Counter) myRegistry.lookup("Login");
+            AppInterface impl= (AppInterface) myRegistry.lookup("Login");
             impl.testConnectie();
             System.out.println("game started");
             FXMLLoader Loader=new FXMLLoader();

@@ -9,8 +9,7 @@ import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 
 public class eindeSpelController implements Initializable {
-    public Counter impl;
-    public String sessionToken;
+    public AppInterface impl;
     public Label status;
     public Label score1;
     public Label punten;
@@ -20,15 +19,13 @@ public class eindeSpelController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
     }
-    public void getResults(Counter impl, String sessionToken, int score){
+    public void getResults(AppInterface impl, String sessionToken, int score){
         System.out.println("Scores" + score);
         String gedeeld = "";
         try {
             int plaats = 0;
             try {
-                System.out.println("test");
                 plaats = impl.getResult(sessionToken);
-                System.out.println("plaats" + plaats);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }

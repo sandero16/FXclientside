@@ -75,7 +75,6 @@ public class keuzeMenuSpelersController  implements Initializable {
         System.out.println("sessiontoken: "+sessionToken);
         Stage oldstage  = (Stage) twee.getScene().getWindow();
         oldstage.close();
-        System.out.println("ik ben er nog");
         controller.waitForOtherPlayer(sessionToken, spelers, host);
     }
 

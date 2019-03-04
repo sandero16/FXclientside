@@ -25,9 +25,7 @@ public class Main extends Application {
 
             System.out.println("running");
 
-// fire to localhost port 1099
-            //System.setProperty("java.security.policy","file:./RMIpolicy.policy");
-
+        // fire to localhost port 1099
 
         FXMLLoader Loader=new FXMLLoader();
         Loader.setLocation(getClass().getResource("startWindow.fxml"));
